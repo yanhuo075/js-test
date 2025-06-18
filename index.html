@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP地址查询工具</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -16,7 +14,7 @@
             color: #333;
         }
         .container {
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
@@ -73,14 +71,20 @@
         .hidden {
             display: none;
         }
-        #map {
-            height: 400px;
-            margin-top: 20px;
+        pre {
+            background-color: #f8f8f8;
+            padding: 10px;
             border-radius: 4px;
-            border: 1px solid #ddd;
+            overflow-x: auto;
         }
-        .map-container {
-            margin-top: 20px;
+        .json-key {
+            color: #d63384;
+        }
+        .json-string {
+            color: #20c997;
+        }
+        .json-number {
+            color: #fd7e14;
         }
     </style>
 </head>
@@ -96,26 +100,13 @@
         </div>
         <div id="result" class="result hidden">
             <h3>查询结果</h3>
-            <p><strong>IP地址:</strong> <span id="resIp"></span></p>
-            <p><strong>国家:</strong> <span id="resCountry"></span></p>
-            <p><strong>地区:</strong> <span id="resRegion"></span></p>
-            <p><strong>城市:</strong> <span id="resCity"></span></p>
-            <p><strong>邮政编码:</strong> <span id="resZip"></span></p>
-            <p><strong>纬度:</strong> <span id="resLat"></span></p>
-            <p><strong>经度:</strong> <span id="resLon"></span></p>
-            <p><strong>时区:</strong> <span id="resTimezone"></span></p>
-            <p><strong>ISP:</strong> <span id="resIsp"></span></p>
-            <p><strong>组织:</strong> <span id="resOrg"></span></p>
-            <p><strong>AS编号:</strong> <span id="resAs"></span></p>
-        </div>
-        <div class="map-container">
-            <div id="map"></div>
+            <div id="resultContent"></div>
+            <h3>原始API响应</h3>
+            <pre id="apiResponse"></pre>
         </div>
         <div id="error" class="error hidden"></div>
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
