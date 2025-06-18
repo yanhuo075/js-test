@@ -4,6 +4,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultDiv = document.getElementById('result');
     const loadingDiv = document.getElementById('loading');
     const errorDiv = document.getElementById('error');
+    const mapDiv = document.getElementById('map');
+    
+    // 初始化地图
+    let map = L.map('map').setView([51.505, -0.09], 3); // 默认中心点和缩放级别
+    
+    // 添加OpenStreetMap图层
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    
+    // 创建一个空的标记组
+    let markers = L.layerGroup().addTo(map);
     
     // 自动聚焦到输入框
     ipInput.focus();
@@ -26,6 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
         resultDiv.classList.add('hidden');
         errorDiv.classList.add('hidden');
         
+        // 清除之前的标记
+        markers.clearLayers();
+        
         // 显示加载中
         loadingDiv.classList.remove('hidden');
         
@@ -47,6 +62,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // 显示结果
                 displayResult(data);
+                
+                // 如果有经纬度信息，显示地图标记
+                if (data.latitude && data.longitude) {
+                    showOnMap(data.latitude, data.longitude, data.city || data.country_name || '未知位置');
+                } else {
+                    errorDiv.textContent = '该IP地址没有位置信息';
+                    errorDiv.classList.remove('hidden');
+                }
             })
             .catch(error => {
                 // 隐藏加载中
@@ -75,5 +98,20 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 显示结果区域
         resultDiv.classList.remove('hidden');
+    }
+    
+    // 在地图上显示位置
+    function showOnMap(lat, lng, locationName) {
+        // 添加标记
+        const marker = L.marker([lat, lng]).addTo(map);
+        
+        // 添加弹出窗口
+        marker.bindPopup(`<b>IP位置</b><br>${locationName}<br>纬度: ${lat}<br>经度: ${lng}`);
+        
+        // 将地图中心移动到标记位置
+        map.setView([lat, lng], 13);
+        
+        // 将标记添加到标记组
+        markers.addLayer(marker);
     }
 });

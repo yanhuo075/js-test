@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP地址查询工具</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -14,7 +16,7 @@
             color: #333;
         }
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
@@ -71,6 +73,15 @@
         .hidden {
             display: none;
         }
+        #map {
+            height: 400px;
+            margin-top: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .map-container {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -97,9 +108,14 @@
             <p><strong>组织:</strong> <span id="resOrg"></span></p>
             <p><strong>AS编号:</strong> <span id="resAs"></span></p>
         </div>
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
         <div id="error" class="error hidden"></div>
     </div>
 
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
